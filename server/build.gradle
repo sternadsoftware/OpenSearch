@@ -115,6 +115,10 @@ dependencies {
   // https://mvnrepository.com/artifact/org.roaringbitmap/RoaringBitmap
   api libs.roaringbitmap
 
+  // bouncyCastle
+  api 'org.bouncycastle:bc-fips:1.0.2.5'
+  api 'org.bouncycastle:bctls-fips:1.0.19'
+
   testImplementation(project(":test:framework")) {
     // tests use the locally compiled version of server
     exclude group: 'org.opensearch', module: 'server'
