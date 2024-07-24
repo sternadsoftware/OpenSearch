@@ -92,6 +92,7 @@ grant codeBase "${codebase.reactor-core}" {
 
 // security
 grant {
+    permission java.io.FilePermission "/home/iigonin/workspace/OpenSearchSternad/certs/*", "read";
     permission java.security.SecurityPermission "getProperty.jdk.tls.disabledAlgorithms";
     permission java.security.SecurityPermission "getProperty.jdk.certpath.disabledAlgorithms";
     permission java.security.SecurityPermission "getProperty.keystore.type.compat";

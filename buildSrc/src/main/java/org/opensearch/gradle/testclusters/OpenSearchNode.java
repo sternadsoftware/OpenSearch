@@ -1170,6 +1170,64 @@ public class OpenSearchNode implements TestClusterConfiguration {
         baseConfig.put("node.portsfile", "true");
         baseConfig.put("http.port", httpPort);
         baseConfig.put("transport.port", transportPort);
+
+//        var certPath = "/home/iigonin/workspace/OpenSearchSternad/certs/";
+
+        // self-signed CA authority
+//        baseConfig.put("reindex.ssl.certificate_authorities", certPath + "root-ca.pem");
+
+        // DSA (basically can only be used for signing)
+//        baseConfig.put("reindex.ssl.certificate", certPath + "node2-DSA.pem");
+//        baseConfig.put("reindex.ssl.key", certPath + "node2-DSA-key.pem");
+
+        // DSA with parameters
+//        baseConfig.put("reindex.ssl.certificate", certPath + "node2-DSA-param.pem");
+//        baseConfig.put("reindex.ssl.key", certPath + "node2-DSA-param-key.pem");
+
+        // DSA enc
+//        baseConfig.put("reindex.ssl.certificate", certPath + "node2-DSA.pem");
+//        baseConfig.put("reindex.ssl.key", certPath + "node2-DSA-enc-key.pem");
+//        baseConfig.put("reindex.ssl.key_passphrase", "password");
+
+        // Elliptic Curve Diffie-Hellman (ECDH) secp256r1 aka prime256v1
+//        baseConfig.put("reindex.ssl.certificate", certPath + "node2-EC.pem");
+//        baseConfig.put("reindex.ssl.key", certPath + "node2-secp256r1-key.pem");
+
+        // Elliptic Curve with parameters
+//        baseConfig.put("reindex.ssl.certificate", certPath + "node2-prime256v1-param.pem");
+//        baseConfig.put("reindex.ssl.key", certPath + "node2-prime256v1-param-key.pem");
+
+        // Elliptic Curve enc
+//        baseConfig.put("reindex.ssl.certificate", certPath + "node2-EC.pem");
+//        baseConfig.put("reindex.ssl.key", certPath + "node2-secp256r1-enc-key.pem");
+//        baseConfig.put("reindex.ssl.key_passphrase", "password");
+
+        // RSA PKCS#1
+//        baseConfig.put("reindex.ssl.certificate", certPath + "node2-PKCS1.pem");
+//        baseConfig.put("reindex.ssl.key", certPath + "node2-PKCS1-key.pem");
+
+        // RSA PKCS#1 enc
+//        baseConfig.put("reindex.ssl.certificate", certPath + "node2-PKCS1.pem");
+//        baseConfig.put("reindex.ssl.key", certPath + "node2-PKCS1-enc-key.pem");
+//        baseConfig.put("reindex.ssl.key_passphrase", "password");
+
+        // RSA PKCS#8
+//        baseConfig.put("reindex.ssl.certificate", certPath + "node2-PKCS8.pem");
+//        baseConfig.put("reindex.ssl.key", certPath + "node2-PKCS8-key.pem");
+
+        // RSA PKCS#8 enc
+//        baseConfig.put("reindex.ssl.certificate", certPath + "node2-PKCS8-enc.pem");
+//        baseConfig.put("reindex.ssl.key", certPath + "node2-PKCS8-enc-key.pem");
+//        baseConfig.put("reindex.ssl.key_passphrase", "rzg9RxrMBDU3jV^^$vNB");
+
+        // keystore + struststore config
+//        baseConfig.put("reindex.ssl.keystore.path", certPath + "keystore.bks");
+//        baseConfig.put("reindex.ssl.keystore.password", "password");
+//        baseConfig.put("reindex.ssl.truststore.path", certPath + "truststore.bks");
+//        baseConfig.put("reindex.ssl.truststore.password", "password");
+
+        baseConfig.put("reindex.remote.whitelist", "node1.dns.a-record:10200");
+
         // Default the watermarks to absurdly low to prevent the tests from failing on nodes without enough disk space
         baseConfig.put("cluster.routing.allocation.disk.watermark.low", "1b");
         baseConfig.put("cluster.routing.allocation.disk.watermark.high", "1b");

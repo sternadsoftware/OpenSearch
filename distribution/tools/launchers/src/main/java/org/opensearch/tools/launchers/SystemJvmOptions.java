@@ -43,6 +43,7 @@ final class SystemJvmOptions {
     static List<String> systemJvmOptions(final Path config) {
         return Collections.unmodifiableList(
             Arrays.asList(
+                "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005",
                 /*
                  * Cache ttl in seconds for positive DNS lookups noting that this overrides the JDK security property
                  * networkaddress.cache.ttl; can be set to -1 to cache forever.
