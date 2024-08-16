@@ -32,6 +32,7 @@
 
 package org.opensearch.tools.launchers;
 
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -39,9 +40,10 @@ import java.util.stream.Collectors;
 
 final class SystemJvmOptions {
 
-    static List<String> systemJvmOptions() {
+    static List<String> systemJvmOptions(final Path config) {
         return Collections.unmodifiableList(
             Arrays.asList(
+                "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005",
                 /*
                  * Cache ttl in seconds for positive DNS lookups noting that this overrides the JDK security property
                  * networkaddress.cache.ttl; can be set to -1 to cache forever.
@@ -79,9 +81,15 @@ final class SystemJvmOptions {
                 "-Dlog4j2.disable.jmx=true",
                 // security manager
                 allowSecurityManagerOption(),
+                loadJavaSecurityProperties(config),
                 javaLocaleProviders()
             )
         ).stream().filter(e -> e.isEmpty() == false).collect(Collectors.toList());
+    }
+
+    private static String loadJavaSecurityProperties(final Path config) {
+        var securityFile = config.resolve("fips_java.security").toFile();
+        return "-Djava.security.properties=" + securityFile.getAbsolutePath();
     }
 
     private static String allowSecurityManagerOption() {
