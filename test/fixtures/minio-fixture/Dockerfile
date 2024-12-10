@@ -4,6 +4,12 @@ ARG bucket
 ARG accessKey
 ARG secretKey
 
-RUN mkdir -p /minio/data/${bucket}
 ENV MINIO_ROOT_USER=${accessKey}
 ENV MINIO_ROOT_PASSWORD=${secretKey}
+ENV bucket=${bucket}
+
+COPY entrypoint.sh /usr/bin/entrypoint.sh
+RUN chmod +x /usr/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+CMD ["server", "--console-address", ":9001", "/minio/data"]

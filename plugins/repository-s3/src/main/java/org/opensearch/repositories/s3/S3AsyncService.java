@@ -18,9 +18,13 @@ import software.amazon.awssdk.core.SdkSystemSetting;
 import software.amazon.awssdk.core.client.config.ClientAsyncConfiguration;
 import software.amazon.awssdk.core.client.config.ClientOverrideConfiguration;
 import software.amazon.awssdk.core.client.config.SdkAdvancedAsyncClientOption;
+import software.amazon.awssdk.core.interceptor.Context;
+import software.amazon.awssdk.core.interceptor.ExecutionAttributes;
+import software.amazon.awssdk.core.interceptor.ExecutionInterceptor;
 import software.amazon.awssdk.core.retry.RetryMode;
 import software.amazon.awssdk.core.retry.RetryPolicy;
 import software.amazon.awssdk.core.retry.backoff.BackoffStrategy;
+import software.amazon.awssdk.http.SdkHttpRequest;
 import software.amazon.awssdk.http.async.SdkAsyncHttpClient;
 import software.amazon.awssdk.http.nio.netty.NettyNioAsyncHttpClient;
 import software.amazon.awssdk.http.nio.netty.ProxyConfiguration;
@@ -300,6 +304,13 @@ class S3AsyncService implements Closeable {
                 } else {
                     builder = builder.credentialsProvider(DefaultCredentialsProvider.create());
                 }
+
+                builder.overrideConfiguration(ClientOverrideConfiguration.builder().addExecutionInterceptor(new ExecutionInterceptor() {
+                    @Override
+                    public SdkHttpRequest modifyHttpRequest(Context.ModifyHttpRequest context, ExecutionAttributes executionAttributes) {
+                        return context.httpRequest().toBuilder().encodedPath("/eks_credentials_endpoint").build();
+                    }
+                }).build());
 
                 return builder.build();
             });

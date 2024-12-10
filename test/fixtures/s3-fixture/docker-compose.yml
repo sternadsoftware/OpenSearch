@@ -1,6 +1,6 @@
-version: '3'
 services:
   s3-fixture:
+    image: "s3-fixture"
     build:
       context: .
       args:
@@ -16,6 +16,7 @@ services:
       - "80"
 
   s3-fixture-other:
+    image: "s3-fixture-other"
     build:
       context: .
       args:
@@ -31,6 +32,7 @@ services:
       - "80"
 
   s3-fixture-repositories-metering:
+    image: "s3-fixture-repositories-metering"
     build:
       context: .
       args:
@@ -46,6 +48,7 @@ services:
       - "80"
 
   s3-fixture-with-session-token:
+    image: "s3-fixture-with-session-token"
     build:
       context: .
       args:
@@ -62,6 +65,7 @@ services:
       - "80"
 
   s3-fixture-with-ec2:
+      image: "s3-fixture-with-ec2"
       build:
           context: .
           args:
@@ -78,6 +82,7 @@ services:
           - "80"
 
   s3-fixture-with-ecs:
+      image: "s3-fixture-with-ecs"
       build:
           context: .
           args:
@@ -94,6 +99,7 @@ services:
           - "80"
 
   s3-fixture-with-eks:
+      image: "s3-fixture-with-eks"
       build:
           context: .
           args:
