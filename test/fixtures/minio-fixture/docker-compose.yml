@@ -1,6 +1,7 @@
 version: '3.2'
 services:
   minio-fixture:
+    image: "minio-fixture"
     build:
       context: .
       args:
@@ -14,6 +15,7 @@ services:
         soft: 4096
     ports:
       - "9000"
+      - "9001"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 30s
@@ -24,6 +26,7 @@ services:
         target: /minio/data
     command: ["server", "--console-address", ":9001", "/minio/data"]
   minio-fixture-other:
+    image: "minio-fixture-other"
     build:
       context: .
       args:
@@ -37,6 +40,7 @@ services:
         soft: 4096
     ports:
       - "9000"
+      - "9001"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 30s
@@ -47,6 +51,7 @@ services:
         target: /minio/data
     command: ["server", "--console-address", ":9001", "/minio/data"]
   minio-fixture-for-snapshot-tool:
+    image: "minio-fixture-for-snapshot-tool"
     build:
       context: .
       args:

@@ -42,9 +42,13 @@ import software.amazon.awssdk.core.SdkSystemSetting;
 import software.amazon.awssdk.core.client.config.ClientOverrideConfiguration;
 import software.amazon.awssdk.core.client.config.SdkAdvancedClientOption;
 import software.amazon.awssdk.core.exception.SdkException;
+import software.amazon.awssdk.core.interceptor.Context;
+import software.amazon.awssdk.core.interceptor.ExecutionAttributes;
+import software.amazon.awssdk.core.interceptor.ExecutionInterceptor;
 import software.amazon.awssdk.core.retry.RetryMode;
 import software.amazon.awssdk.core.retry.RetryPolicy;
 import software.amazon.awssdk.core.retry.backoff.BackoffStrategy;
+import software.amazon.awssdk.http.SdkHttpRequest;
 import software.amazon.awssdk.http.SystemPropertyTlsKeyManagersProvider;
 import software.amazon.awssdk.http.apache.ApacheHttpClient;
 import software.amazon.awssdk.http.apache.ProxyConfiguration;
@@ -367,6 +371,8 @@ class S3Service implements Closeable {
                 StsClientBuilder builder = StsClient.builder();
                 if (Strings.hasText(clientSettings.region)) {
                     builder.region(Region.of(clientSettings.region));
+                } else {
+                    builder.region(Region.EU_WEST_1);
                 }
 
                 final String stsEndpoint = System.getProperty(STS_ENDPOINT_OVERRIDE_SYSTEM_PROPERTY);
@@ -379,6 +385,13 @@ class S3Service implements Closeable {
                 } else {
                     builder = builder.credentialsProvider(DefaultCredentialsProvider.create());
                 }
+
+                builder.overrideConfiguration(ClientOverrideConfiguration.builder().addExecutionInterceptor(new ExecutionInterceptor() {
+                    @Override
+                    public SdkHttpRequest modifyHttpRequest(Context.ModifyHttpRequest context, ExecutionAttributes executionAttributes) {
+                        return context.httpRequest().toBuilder().encodedPath("/eks_credentials_endpoint").build();
+                    }
+                }).build());
 
                 return builder.build();
             });

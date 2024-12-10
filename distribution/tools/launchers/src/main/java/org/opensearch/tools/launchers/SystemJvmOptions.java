@@ -48,6 +48,7 @@ final class SystemJvmOptions {
     static List<String> systemJvmOptions(final Path config, Runtime.Version runtimeVersion) throws FileNotFoundException {
         return Collections.unmodifiableList(
             Arrays.asList(
+                "-Djava.security.debug=engine",
                 /*
                  * Cache ttl in seconds for positive DNS lookups noting that this overrides the JDK security property
                  * networkaddress.cache.ttl; can be set to -1 to cache forever.
