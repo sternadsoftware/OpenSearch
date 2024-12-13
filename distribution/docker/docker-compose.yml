@@ -8,7 +8,7 @@ services:
        - cluster.initial_cluster_manager_nodes=opensearch-1,opensearch-2
        - discovery.seed_hosts=opensearch-2:9300
        - cluster.name=opensearch
-       - bootstrap.memory_lock=true
+       - bootstrap.memory_lock=false
        - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
        - path.repo=/tmp/opensearch-repo
        - node.attr.testattr=test
@@ -23,8 +23,8 @@ services:
       - "9200"
     ulimits:
       memlock:
-        soft: -1
-        hard: -1
+        soft: 4096
+        hard: 4096
   opensearch-2:
     image: opensearch:test
     environment:
@@ -32,7 +32,7 @@ services:
        - cluster.initial_cluster_manager_nodes=opensearch-1,opensearch-2
        - discovery.seed_hosts=opensearch-1:9300
        - cluster.name=opensearch
-       - bootstrap.memory_lock=true
+       - bootstrap.memory_lock=false
        - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
        - path.repo=/tmp/opensearch-repo
        - node.attr.testattr=test
@@ -47,5 +47,5 @@ services:
       - "9200"
     ulimits:
       memlock:
-        soft: -1
-        hard: -1
+        soft: 4096
+        hard: 4096
