@@ -114,7 +114,8 @@ public class RepositoryCredentialsTests extends OpenSearchSingleNodeTestCase imp
         final Settings.Builder repositorySettings = Settings.builder()
             // repository settings for credentials override node secure settings
             .put(S3Repository.ACCESS_KEY_SETTING.getKey(), "insecure_aws_key")
-            .put(S3Repository.SECRET_KEY_SETTING.getKey(), "insecure_aws_secret");
+            .put(S3Repository.SECRET_KEY_SETTING.getKey(), "insecure_aws_secret")
+            .put("region", "us-west-2");
 
         final String clientName = randomFrom("default", "other", null);
         if (clientName != null) {
@@ -156,8 +157,10 @@ public class RepositoryCredentialsTests extends OpenSearchSingleNodeTestCase imp
             // repository settings for credentials override node secure settings
             repositorySettings.put(S3Repository.ACCESS_KEY_SETTING.getKey(), "insecure_aws_key");
             repositorySettings.put(S3Repository.SECRET_KEY_SETTING.getKey(), "insecure_aws_secret");
+            repositorySettings.put("region", "us-west-2");
         } else {
             repositorySettings.put(S3Repository.CLIENT_NAME.getKey(), clientName);
+            repositorySettings.put("region", "us-west-2");
         }
 
         final String repositoryName = "repo-reinit-creds";
