@@ -34,8 +34,16 @@ apply plugin: 'opensearch.build'
 apply plugin: 'opensearch.publish'
 
 java {
-  targetCompatibility = JavaVersion.VERSION_11
-  sourceCompatibility = JavaVersion.VERSION_11
+  targetCompatibility = JavaVersion.VERSION_1_8
+  sourceCompatibility = JavaVersion.VERSION_1_8
+}
+
+configurations {
+  java11TestImplementation.extendsFrom(implementation)
+}
+
+dependencies {
+  java11TestImplementation project(':libs:opensearch-ssl-config')
 }
 
 base {
@@ -59,7 +67,6 @@ dependencies {
   api "org.reactivestreams:reactive-streams:${versions.reactivestreams}"
 
   testImplementation project(":client:test")
-  testImplementation project(':libs:opensearch-ssl-config')
   testImplementation "com.carrotsearch.randomizedtesting:randomizedtesting-runner:${versions.randomizedrunner}"
   testImplementation "junit:junit:${versions.junit}"
   testImplementation "org.hamcrest:hamcrest:${versions.hamcrest}"
@@ -212,6 +219,8 @@ thirdPartyAudit {
 }
 
 tasks.withType(JavaCompile) {
+  classpath += files(project(':libs:opensearch-ssl-config').jar.archiveFile)
+  classpath += files(project(':libs:opensearch-common').jar.archiveFile)
   // Suppressing '[options] target value 8 is obsolete and will be removed in a future release'
   configure(options) {
     options.compilerArgs << '-Xlint:-options'
