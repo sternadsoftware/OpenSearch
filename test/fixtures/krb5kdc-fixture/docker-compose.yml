@@ -1,6 +1,7 @@
 version: '3'
 services:
   peppa:
+    image: "peppa"
     hostname: kerberos.build.opensearch.org
     build:
       context: .
@@ -14,6 +15,7 @@ services:
       - "4444"
       - "88/udp"
   hdfs:
+    image: "hdfs"
     hostname: kerberos.build.opensearch.org
     build:
       context: .

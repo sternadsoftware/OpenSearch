@@ -42,6 +42,9 @@ import org.opensearch.node.InternalSettingsPreparer;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Provider;
+import java.security.Security;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -100,6 +103,12 @@ public abstract class EnvironmentAwareCommand extends Command {
         putSystemPropertyIfSettingIsMissing(settings, "path.data", "opensearch.path.data");
         putSystemPropertyIfSettingIsMissing(settings, "path.home", "opensearch.path.home");
         putSystemPropertyIfSettingIsMissing(settings, "path.logs", "opensearch.path.logs");
+
+        try {
+            Thread.sleep(120 * 1000);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
 
         execute(terminal, options, createEnv(settings));
     }

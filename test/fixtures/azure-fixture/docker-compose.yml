@@ -1,6 +1,7 @@
 version: '3'
 services:
   azure-fixture:
+    image: azure-fixture
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,6 +11,7 @@ services:
       - "8091"
 
   azure-fixture-other:
+    image: azure-fixture-other
     build:
       context: .
       dockerfile: Dockerfile
@@ -19,6 +21,7 @@ services:
       - "8091"
 
   azure-fixture-repositories-metering:
+    image: azure-fixture-repositories-metering
     build:
       context: .
       dockerfile: Dockerfile

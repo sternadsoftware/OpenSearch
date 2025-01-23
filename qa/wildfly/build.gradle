@@ -67,6 +67,10 @@ dependencies {
   }
 }
 
+tasks.named('spotlessJava') {
+  dependsOn tasks.named('preProcessFixture')
+}
+
 war {
   archiveFileName = 'example-app.war'
 }
